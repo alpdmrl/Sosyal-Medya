@@ -1,1 +1,1 @@
-Twitterımsı Sosyal Medya Sitesi
+Twitterımsı bir sosyal medya sitesi
