@@ -1,0 +1,209 @@
+{% extends "main.html" %}
+{% load static  %}
+
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="profil-info">
+            <div class="d-flex w-100">
+                <!-- Profil Resmi -->
+                <div class="me-3">
+                    <img src="{{user.hesap.resim.url}}" width="70" height="70" class="rounded-5" alt="">
+                </div>
+                <!-- Profil Bilgileri -->
+                <div class="d-flex justify-content-between w-100">
+                    <div>
+                        <h3 class="h3 mb-0">{{user.hesap.isim}} {{user.hesap.soyisim}}</h3>
+                        <small class="text-muted">@{{user.username}}</small>
+                        <p>{{user.hesap.bio}}</p>
+                        <small>Katılma Tarihi : {{user.hesap.created_at}}</small>
+                    </div>
+                    <div>
+                        <small>Takip : {{user.hesap.takip.all.count}}</small>
+                        <small>Takipçi : {{user.hesap.takipci.all.count}}</small>
+                        <br><br>
+                        <a href="/user/update/" class="button">Profili Düzenle</a>
+                        <a href="/user/reset/" class="button mt-2">Şifre Değiştir </a>
+                        
+                    </div>
+                    
+
+                </div>
+            </div>
+        </div>
+        <div class="sekmeler d-flex mt-3 justify-content-evenly">
+            
+            <h5 class="tablinks active" onclick="openCity(event, 'Paylasim')">Paylaşımlar</h5>
+            <h5 class="tablinks" onclick="openCity(event, 'Begeni')">Beğeniler</h5>
+            <h5 class="tablinks" onclick="openCity(event, 'Retweet')">Retweetler</h5>               
+        </div>
+        <hr>
+        <div class="tabcontent goster" id="Paylasim">
+            {% for post in paylasim %}
+            <div class="post">
+                <div class="owner d-flex">
+                    <div>
+                        <img src="{{post.owner.hesap.resim.url}}" width="60" height="60" rounded-5" class="" alt="">
+                    </div>
+                    <div class="ms-3">
+                        <h5 class="mt-2 mb-0">{{post.owner.hesap.isim}} {{post.owner.hesap.soyisim}}</h5>
+                        <small>@{{post.owner.username}}</small>
+                    </div>
+                </div>
+                <div class="content mt-3">
+                    <p>
+                        {{post.content}}
+                    </p>
+                </div>
+                {% if post.resim %}
+                    <img src="{{post.resim.url}}" style="object-fit: cover;" width="50%" height="400" alt="">
+                {% else %}
+                {% endif %}
+                <form action="" class="d-flex mt-2" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="postId" value="{{post.id}}">
+                    <input type="submit" value="Beğen({{post.like.all.count}})" name="begen" 
+                    {% if request.user in post.like.all %}
+                        class="button yesil  me-2"
+                    {% else %}
+                        class="button  me-2"
+                    {% endif %}
+                    >
+                    <input type="submit" value="Beğenme({{post.dislike.all.count}})" name="begenme" 
+                    {% if request.user in post.dislike.all %}
+                        class="button yesil  me-2"
+                    {% else %}
+                        class="button  me-2"
+                    {% endif %}
+                    >
+                    <input type="submit" value="Paylaş({{post.retweet.all.count}})" name="paylas" 
+                    {% if request.user in post.retweet.all %}
+                        class="button yesil  me-2"
+                    {% else %}
+                        class="button  me-2"
+                    {% endif %}
+                    >
+                </form>
+            </div>
+            <hr class="my-4">
+        {% endfor %} 
+        </div>
+        <div class="tabcontent" id="Begeni">
+            {% for post in begeni  %}
+            <div class="post">
+                <div class="owner d-flex">
+                    <div>
+                        <img src="{{post.owner.hesap.resim.url}}" width="60" height="60" rounded-5" class="" alt="">
+                    </div>
+                    <div class="ms-3">
+                        <h5 class="mt-2 mb-0">{{post.owner.hesap.isim}} {{post.owner.hesap.soyisim}}</h5>
+                        <small>@{{post.owner.username}}</small>
+                    </div>
+                </div>
+                <div class="content mt-3">
+                    <p>
+                        {{post.content}}
+                    </p>
+                </div>
+                {% if post.resim %}
+                    <img src="{{post.resim.url}}" style="object-fit: cover;" width="50%" height="400" alt="">
+                {% else %}
+                {% endif %}
+                <form action="" class="d-flex mt-2" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="postId" value="{{post.id}}">
+                    <input type="submit" value="Beğen({{post.like.all.count}})" name="begen" 
+                    {% if request.user in post.like.all %}
+                        class="button yesil  me-2"
+                    {% else %}
+                        class="button  me-2"
+                    {% endif %}
+                    >
+                    <input type="submit" value="Beğenme({{post.dislike.all.count}})" name="begenme" 
+                    {% if request.user in post.dislike.all %}
+                        class="button yesil  me-2"
+                    {% else %}
+                        class="button  me-2"
+                    {% endif %}
+                    >
+                    <input type="submit" value="Paylaş({{post.retweet.all.count}})" name="paylas" 
+                    {% if request.user in post.retweet.all %}
+                        class="button yesil  me-2"
+                    {% else %}
+                        class="button  me-2"
+                    {% endif %}
+                    >
+                </form>
+            </div>
+            <hr class="my-4">
+        {% endfor %} 
+        </div>
+        <div class="tabcontent" id="Retweet">
+            {% for post in retweet  %}
+            <div class="post">
+                <div class="owner d-flex">
+                    <div>
+                        <img src="{{post.owner.hesap.resim.url}}" width="60" height="60" rounded-5" class="" alt="">
+                    </div>
+                    <div class="ms-3">
+                        <h5 class="mt-2 mb-0">{{post.owner.hesap.isim}} {{post.owner.hesap.soyisim}}</h5>
+                        <small>@{{post.owner.username}}</small>
+                    </div>
+                </div>
+                <div class="content mt-3">
+                    <p>
+                        {{post.content}}
+                    </p>
+                </div>
+                {% if post.resim %}
+                    <img src="{{post.resim.url}}" style="object-fit: cover;" width="50%" height="400" alt="">
+                {% else %}
+                {% endif %}
+                <form action="" class="d-flex mt-2" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="postId" value="{{post.id}}">
+                    <input type="submit" value="Beğen({{post.like.all.count}})" name="begen" 
+                    {% if request.user in post.like.all %}
+                        class="button yesil  me-2"
+                    {% else %}
+                        class="button  me-2"
+                    {% endif %}
+                    >
+                    <input type="submit" value="Beğenme({{post.dislike.all.count}})" name="begenme" 
+                    {% if request.user in post.dislike.all %}
+                        class="button yesil  me-2"
+                    {% else %}
+                        class="button  me-2"
+                    {% endif %}
+                    >
+                    <input type="submit" value="Paylaş({{post.retweet.all.count}})" name="paylas" 
+                    {% if request.user in post.retweet.all %}
+                        class="button yesil  me-2"
+                    {% else %}
+                        class="button  me-2"
+                    {% endif %}
+                    >
+                </form>
+            </div>
+            <hr class="my-4">
+        {% endfor %} 
+        </div>
+    </div>
+    
+    
+    <script>
+        function openCity(evt, cityName) {
+          var i, tabcontent, tablinks;
+          tabcontent = document.getElementsByClassName("tabcontent");
+          for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+          }
+          tablinks = document.getElementsByClassName("tablinks");
+          for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+          }
+          document.getElementById(cityName).style.display = "block";
+          evt.currentTarget.className += " active";
+        }
+        </script>
+{% endblock content %}

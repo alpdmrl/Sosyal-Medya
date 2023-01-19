@@ -1,0 +1,49 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #395237;
+    color: whitesmoke;
+}
+.h1 {
+    font-size: 26px;
+}
+.h2 {
+    font-size: 24px;
+}
+.h3 {
+    font-size: 22px;
+}
+.button {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #808C20;
+    border-radius: 10px;
+    text-decoration: none;
+    color: wheat;
+    
+}
+.kirmizi {
+    background-color: red !important;
+}
+.yesil {
+    background-color: #85816F !important;
+}
+.tabcontent {
+    display: none;
+}
+.active {
+    background-color: whitesmoke;
+    color: #395237 ;
+}
+.goster {
+    display: block;
+}
+.sekmeler h5 {
+    cursor: pointer;
+    padding: 10px;
+    transition: 0.6s;
+}

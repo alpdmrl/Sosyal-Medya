@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="POST" enctype="multipart/form-data" class="w-50 m-auto border p-4">
+            {% csrf_token %}
+            <label for="">Kullanıcı Adı</label>
+            <input type="text" name="kullanici" required id="" class="form-control">
+            <label for="">Email</label>      
+            <input type="email" name="email" required id="" class="form-control">
+            <label for="">İsim</label>
+            <input type="text" name="isim" required id="" class="form-control">
+            <label for="">Soyisim</label>
+            <input type="text" name="soyisim" required id="" class="form-control">
+            <label for="">Şifre</label>
+            <input type="password" name="sifre1" required id="" class="form-control">
+            <label for="">Şifre Onay</label>
+            <input type="password" name="sifre2" required id="" class="form-control">
+            <input type="submit" value="Kayıt Ol"  class="btn btn-primary">
+
+        </form>
+
+    </div>
+{% endblock content %}

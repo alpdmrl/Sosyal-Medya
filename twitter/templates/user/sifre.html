@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="POST" enctype="multipart/form-data" class="w-50 m-auto border p-4">
+            {% csrf_token %}
+            <label for="">Mevcut Şifre</label>
+            <input type="password" name="eski" id="" class="form-control">
+            <label for="">Yeni Şifre</label>
+            <input type="password" name="yeni1" id="" class="form-control">
+            <label for="">Yeni Şifre Onay</label>
+            <input type="password" name="yeni2" id="" class="form-control">
+            <input type="submit" value="Güncelle" class="button mt-2">
+            
+        </form>
+    </div>
+
+
+
+{% endblock content %}

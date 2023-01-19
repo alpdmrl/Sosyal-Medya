@@ -1,0 +1,117 @@
+{% extends "main.html" %}
+{% load static  %}
+
+
+{% block content %}
+    <div class="container ">
+        <h1>Vitruvian</h1>
+        <h3 class="mb-5">Postlar</h3>
+        {% if user.is_authenticated %}
+            {% for i in posts  %}
+                {% for post in i.user.post_set.all  %}
+                    <div class="post">
+                        <a href="/user/other/{{post.owner.id}}" class="d-block w-10 text-light text text-decoration-none">
+                            <div class="owner d-flex">
+                                <div>
+                                    <img src="{{post.owner.hesap.resim.url}}" width="60" height="60" rounded-5" class="" alt="">
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="mt-2 mb-0">{{post.owner.hesap.isim}} {{post.owner.hesap.soyisim}}</h5>
+                                    <small>@{{post.owner.username}}</small>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="content mt-3">
+                            <p>
+                                {{post.content}}
+                            </p>
+                        </div>
+                        {% if post.resim %}
+                            <img src="{{post.resim.url}}" style="object-fit: cover;" width="50%" height="400" alt="">
+                        {% else %}
+                        {% endif %}
+                        <form action="" class="d-flex mt-2" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="postId" value="{{post.id}}">
+                            <input type="submit" value="Beğen({{post.like.all.count}})" name="begen" 
+                            {% if request.user in post.like.all %}
+                                class="button yesil  me-2"
+                            {% else %}
+                                class="button  me-2"
+                            {% endif %}
+                            >
+                            <input type="submit" value="Beğenme({{post.dislike.all.count}})" name="begenme" 
+                            {% if request.user in post.dislike.all %}
+                                class="button yesil  me-2"
+                            {% else %}
+                                class="button  me-2"
+                            {% endif %}
+                            >
+                            <input type="submit" value="Paylaş({{post.retweet.all.count}})" name="paylas" 
+                            {% if request.user in post.retweet.all %}
+                                class="button yesil  me-2"
+                            {% else %}
+                                class="button  me-2"
+                            {% endif %}
+                            >
+                        </form>
+                    </div>
+                
+                    <hr class="my-4">
+                {% endfor %} 
+        {% endfor %}
+        {% else %}
+            {% for post in posts  %}
+                <div class="post">
+                    <a href="/user/other/{{post.owner.id}}" class="d-block w-10 text-light text text-decoration-none">
+                        <div class="owner d-flex">
+                            <div>
+                                <img src="{{post.owner.hesap.resim.url}}" width="60" height="60" rounded-5" class="" alt="">
+                            </div>
+                            <div class="ms-3">
+                                <h5 class="mt-2 mb-0">{{post.owner.hesap.isim}} {{post.owner.hesap.soyisim}}</h5>
+                                <small>@{{post.owner.username}}</small>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="content mt-3">
+                        <p>
+                            {{post.content}}
+                        </p>
+                    </div>
+                    {% if post.resim %}
+                        <img src="{{post.resim.url}}" style="object-fit: cover;" width="50%" height="400" alt="">
+                    {% else %}
+                    {% endif %}
+                    <form action="" class="d-flex mt-2" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="postId" value="{{post.id}}">
+                        <input type="submit" value="Beğen({{post.like.all.count}})" name="begen" 
+                        {% if request.user in post.like.all %}
+                            class="button yesil  me-2"
+                        {% else %}
+                            class="button  me-2"
+                        {% endif %}
+                        >
+                        <input type="submit" value="Beğenme({{post.dislike.all.count}})" name="begenme" 
+                        {% if request.user in post.dislike.all %}
+                            class="button yesil  me-2"
+                        {% else %}
+                            class="button  me-2"
+                        {% endif %}
+                        >
+                        <input type="submit" value="Paylaş({{post.retweet.all.count}})" name="paylas" 
+                        {% if request.user in post.retweet.all %}
+                            class="button yesil  me-2"
+                        {% else %}
+                            class="button  me-2"
+                        {% endif %}
+                        >
+                    </form>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+    </div>
+
+{% endblock content %}
